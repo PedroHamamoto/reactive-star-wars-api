@@ -8,7 +8,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @Getter
 @ToString
-public class PlanetResource {
+public class PlanetResponse {
 
     private String id;
     private String name;
