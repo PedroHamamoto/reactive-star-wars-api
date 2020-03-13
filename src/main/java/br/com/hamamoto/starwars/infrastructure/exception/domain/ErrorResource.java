@@ -7,7 +7,7 @@ import lombok.Data;
 @AllArgsConstructor
 public class ErrorResource {
 
-    public int code;
-    public String message;
+    private int code;
+    private String message;
 
 }
