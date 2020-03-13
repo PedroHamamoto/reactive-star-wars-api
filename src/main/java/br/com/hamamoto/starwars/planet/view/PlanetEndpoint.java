@@ -27,8 +27,13 @@ public class PlanetEndpoint {
     }
 
     private PlanetResponse toResource(Planet planet) {
-        return new PlanetResponse(planet.getId(), planet.getName(), planet.getClimate(), planet.getTerrain(),
-                planet.getAppearancesQuantity());
+        return PlanetResponse.builder()
+                .withId(planet.getId())
+                .withName(planet.getName())
+                .withClimate(planet.getClimate())
+                .withTerrain(planet.getTerrain())
+                .withAppearancesQuantity(planet.getAppearancesQuantity())
+                .build();
     }
 
 }

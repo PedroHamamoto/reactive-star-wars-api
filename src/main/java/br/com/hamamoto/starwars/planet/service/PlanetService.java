@@ -30,8 +30,12 @@ public class PlanetService {
     }
 
     private Planet toEntity(SwPlanetResponse swPlanetResponse, PlanetCreationRequest request) {
-        return new Planet(request.getName(), request.getClimate(), request.getTerrain(),
-                swPlanetResponse.getFilms().size());
+        return Planet.builder()
+                .withName(request.getName())
+                .withClimate(request.getClimate())
+                .withTerrain(request.getClimate())
+                .withAppearancesQuantity(swPlanetResponse.getFilms().size())
+                .build();
     }
 
 }
