@@ -1,0 +1,8 @@
+{
+  "_id": ObjectId("507f191e810c19729de860ea"),
+  "name": "Tatooine",
+  "climate": "arid",
+  "terrain": "desert",
+  "appearances-quantity": 5,
+  "_class": "br.com.hamamoto.starwars.planet.entity.Planet"
+}

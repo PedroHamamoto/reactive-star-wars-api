@@ -1,0 +1,7 @@
+{
+  "name": "New Tatooine",
+  "climate": "cold",
+  "terrain": "rock",
+  "appearances-quantity": 1,
+  "_class": "br.com.hamamoto.planetservice.domain.Planet"
+}
