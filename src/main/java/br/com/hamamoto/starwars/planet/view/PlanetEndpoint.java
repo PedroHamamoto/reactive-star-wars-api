@@ -19,6 +19,7 @@ public class PlanetEndpoint {
 
     private final PlanetService service;
 
+    @ResponseStatus(code = HttpStatus.CREATED)
     @PostMapping
     public Mono<PlanetResponse> create(@Valid @RequestBody PlanetCreateRequest request) {
         return service.create(request)
@@ -29,6 +30,12 @@ public class PlanetEndpoint {
     @PutMapping("/{id}")
     public Mono<PlanetResponse> update(@Valid @RequestBody PlanetUpdateRequest request, @PathVariable("id") String id) {
         return service.update(request, id)
+                .map(this::toResponse);
+    }
+
+    @GetMapping("/{id}")
+    public Mono<PlanetResponse> getById(@PathVariable("id") String id) {
+        return service.getById(id)
                 .map(this::toResponse);
     }
 

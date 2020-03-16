@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.SneakyThrows;
 import org.bson.Document;
 import org.bson.types.ObjectId;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -32,6 +33,11 @@ public abstract class BaseTest {
     private MongoTemplate mongoTemplate;
 
     private final String RESOURCE_DIRECTORY = "src/test/resources/";
+
+    @AfterEach
+    void tearDown() {
+        mongoTemplate.dropCollection(Planet.class);
+    }
 
     @SneakyThrows
     public String resource(String path) {

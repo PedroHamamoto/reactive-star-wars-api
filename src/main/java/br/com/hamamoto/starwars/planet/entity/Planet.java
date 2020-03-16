@@ -8,10 +8,8 @@ import org.springframework.data.mongodb.core.mapping.Field;
 @AllArgsConstructor
 @RequiredArgsConstructor
 @Getter
-@Data
 @NoArgsConstructor
 @Builder(setterPrefix = "with")
-@ToString
 @Document("planets")
 public class Planet {
 

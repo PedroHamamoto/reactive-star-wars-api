@@ -18,7 +18,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 class PlanetEndpointTest extends BaseTest {
 
-    public static final String EXISTING_PLANET_ID = "507f191e810c19729de860ea";
+    public static final String EXISTENT_PLANET_ID = "507f191e810c19729de860ea";
     public static final String NON_EXISTENT_PLANET_ID = "non-existent-planet-id";
     @Autowired
     private WebTestClient webTestClient;
@@ -37,7 +37,7 @@ class PlanetEndpointTest extends BaseTest {
                 .uri("/rs/planets")
                 .body(Mono.just(request), PlanetCreateRequest.class)
                 .exchange()
-                .expectStatus().isOk()
+                .expectStatus().isCreated()
                 .expectBody()
                 .jsonPath("$.id").isNotEmpty()
                 .jsonPath("$.name").isEqualTo("Tatooine")
@@ -74,14 +74,14 @@ class PlanetEndpointTest extends BaseTest {
 
         webTestClient
                 .put()
-                .uri("/rs/planets/" + EXISTING_PLANET_ID)
+                .uri("/rs/planets/" + EXISTENT_PLANET_ID)
                 .body(Mono.just(request), PlanetUpdateRequest.class)
                 .exchange()
                 .expectStatus().isNoContent();
 
-        var existingPlanet = findPlanetById(EXISTING_PLANET_ID);
+        var existingPlanet = findPlanetById(EXISTENT_PLANET_ID);
 
-        assertThat(existingPlanet.getId(), is(EXISTING_PLANET_ID));
+        assertThat(existingPlanet.getId(), is(EXISTENT_PLANET_ID));
         assertThat(existingPlanet.getAppearancesQuantity(), is(request.getAppearancesQuantity()));
         assertThat(existingPlanet.getClimate(), is(request.getClimate()));
         assertThat(existingPlanet.getName(), is(request.getName()));
@@ -102,4 +102,23 @@ class PlanetEndpointTest extends BaseTest {
                 .jsonPath("$.code").isEqualTo(DomainExceptionMessage.PLANET_NOT_FOUND.getCode())
                 .jsonPath("$.message").isEqualTo(DomainExceptionMessage.PLANET_NOT_FOUND.getMessage());
     }
+
+    @Test
+    public void shouldReturnOkWhenGetAExistentPlanet() {
+        insertPlanet("data/planets/tatooine.json");
+
+        webTestClient
+                .get()
+                .uri("/rs/planets/" + EXISTENT_PLANET_ID)
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody()
+                .jsonPath("$.id").isEqualTo(EXISTENT_PLANET_ID)
+                .jsonPath("$.name").isEqualTo("Tatooine")
+                .jsonPath("$.climate").isEqualTo("arid")
+                .jsonPath("$.terrain").isEqualTo("desert")
+                .jsonPath("$.appearances-quantity").isEqualTo(5);
+
+    }
+
 }

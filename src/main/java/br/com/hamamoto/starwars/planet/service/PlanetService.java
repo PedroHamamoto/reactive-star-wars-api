@@ -38,6 +38,11 @@ public class PlanetService {
                 .flatMap(planetRepository::save);
     }
 
+    public Mono<Planet> getById(String id) {
+        return planetRepository.findById(id)
+                .switchIfEmpty(Mono.error(new DomainException(DomainExceptionMessage.PLANET_NOT_FOUND)));
+    }
+
     public Planet toUpdateEntity(PlanetUpdateRequest request, String id) {
         return Planet.builder()
                 .withId(id)
